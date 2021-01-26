@@ -9,3 +9,8 @@
 ├── layer                       <-- Selenium & Driver
 └── template.yaml
 ```
+
+### デプロイバケットの作成
+```bash
+aws s3mb "s3://${STACK_BUCKET}"
+```
