@@ -14,7 +14,7 @@
 
 ## デプロイバケットの作成
 ```bash
-$ aws s3mb "s3://${STACK_BUCKET}"
+$ aws s3 mb "s3://${STACK_BUCKET}"
 ```
 
 ## 各ブラウザ関連のインストール
