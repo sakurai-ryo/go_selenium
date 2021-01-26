@@ -7,17 +7,25 @@
 ├── go-stacks                 <-- Source code for a lambda function
 │   ├── main.go                 <-- Lambda function code
 ├── layer                       <-- Selenium & Driver
-│   ├── unzip                 <-- Lambda function code
-│   ├── zip                 <-- Lambda function code
+│   ├── unzip                 <-- binary
+│   ├── zip                 <-- zipped binary
 └── template.yaml
 ```
 
 ## デプロイバケットの作成
 ```bash
+$ aws s3 mb "s3://layer/zip/layer.zip"
 $ aws s3 mb "s3://${STACK_BUCKET}"
 ```
+あとで自動化とsamに組み込む
 
-## 各ブラウザ関連のインストール
+## Layerアップロード
+```bash
+$ aws s3 sync layer/zip/ s3://selenium-stack/
+```
+この辺りもあとでsamに組み込み
+
+## 各ブラウザ関連のダウンロード
 ### chromedriver
 ```bash
 $ curl -SL https://chromedriver.storage.googleapis.com/2.37/chromedriver_linux64.zip > layer/unzip/chromedriver.zip

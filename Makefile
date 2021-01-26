@@ -15,7 +15,7 @@ deploy: build
 	sam deploy \
 		--template-file $(SAM_FILE) \
 		--stack-name $(STACK_NAME) \
-		--capabilities CAPABILITY_IAM \
+		--capabilities CAPABILITY_IAM
 .PHONY: deploy
 
 delete:

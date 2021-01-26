@@ -1,9 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: go and Selenium on AWS Lambda
-Parameters:
-  LayerZipPath:
-    Type: String
 Resources:
   GoSelenium:
     Type: AWS::Serverless::Function
@@ -34,8 +31,7 @@ Resources:
       - go1.x
       Content:
         S3Bucket: selenium-stack
-        S3Key:
-          Ref: LayerZipPath
+        S3Key: layer.zip
       Description: something
       LayerName: selenium
 Outputs:
