@@ -2,6 +2,7 @@ AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: go and Selenium on AWS Lambda
 Resources:
+  # Lambda
   GoSelenium:
     Type: AWS::Serverless::Function
     Properties:
@@ -10,8 +11,21 @@ Resources:
       Runtime: go1.x
       Timeout: 10
       Tracing: Active
+      Events:
+        api:
+          Type: Api 
+          Properties:
+            Path: /
+            Method: GET
+
+  # Log Group
   GoSeleniumLogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
       LogGroupName: !Sub /aws/lambda/${GoSelenium}
       RetentionInDays: 1
+
+Outputs:
+  GoSeleniumAPI:
+    Description: "go and Selenium on AWS Lambda"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
