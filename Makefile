@@ -6,6 +6,8 @@ build: GOARCH=amd64 GOOS=linux go build -o artifact/handler ./go-stack
 .PHONY: build
 
 deploy: build
+	rm -f ./layer/zip/layer.zip
+	zip -r ./layer/zip/layer.zip ./layer/unzip
 	sam package \
 		--template-file $(TEMPLATE_FILE) \
 		--s3-bucket $(STACK_BUCKET) \
