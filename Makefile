@@ -2,20 +2,8 @@ STACK_NAME := go-selenium
 TEMPLATE_FILE := template.yml
 SAM_FILE := sam.yml
 
-build: build-write-ext build-write-file-name build-notifier
+build: GOARCH=amd64 GOOS=linux go build -o artifact/handler ./go-stack
 .PHONY: build
-
-build-write-ext:
-	GOARCH=amd64 GOOS=linux go build -o artifact/write_ext ./handlers/write_ext
-.PHONY: build-write-ext
-
-build-write-file-name:
-	GOARCH=amd64 GOOS=linux go build -o artifact/write_file_name ./handlers/write_file_name
-.PHONY: build-write-file-name
-
-build-notifier:
-	GOARCH=amd64 GOOS=linux go build -o artifact/notifier ./handlers/notifier
-.PHONY: build-notifier
 
 deploy: build
 	sam package \
