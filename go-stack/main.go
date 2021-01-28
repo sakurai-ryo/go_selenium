@@ -4,10 +4,12 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/sclevine/agouti"
+	"github.com/chromedp/cdproto/emulation"
+	"github.com/chromedp/chromedp"
 )
 
 func main() {
@@ -32,7 +34,37 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (events
 }
 
 func scraping() (string, error) {
-	driver := agouti.ChromeDriver()
+	// create chrome instance
+	ctx, cancel := chromedp.NewContext(
+		context.Background(),
+		chromedp.WithLogf(log.Printf),
+	)
+	defer cancel()
+
+	// create a timeout
+	ctx, cancel = context.WithTimeout(ctx, 15*time.Second)
+	defer cancel()
+	// navigate to a page, wait for an element, click
+	var res string
+	err := chromedp.Run(ctx,
+		emulation.SetUserAgentOverride("WebScraper 1.0"),
+		chromedp.Navigate(`https://github.com`),
+		// wait for footer element is visible (ie, page is loaded)
+		// chromedp.ScrollIntoView(`footer`),
+		chromedp.WaitVisible(`footer < div`),
+		chromedp.Text(`h1`, &res, chromedp.NodeVisible, chromedp.ByQuery),
+	)
+	if err != nil {
+		return "", err
+	}
+	return res, nil
+}
+
+/*
+func scraping() (string, error) {
+	driver := agouti.ChromeDriver(agouti.ChromeOptions(
+		"binary", "../opt/headless-chromium",
+	))
 	defer driver.Stop()
 
 	if err := driver.Start(); err != nil {
@@ -48,3 +80,4 @@ func scraping() (string, error) {
 	page.Navigate("https://www.google.com/")
 	return page.Title()
 }
+*/

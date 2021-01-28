@@ -19,11 +19,11 @@ $ aws s3 mb "s3://${STACK_BUCKET}"
 ```
 あとで自動化とsamに組み込む
 
-## Layerアップロード
+<!-- ## Layerアップロード
 ```bash
 $ aws s3 sync layer/zip/ s3://selenium-stack/
 ```
-この辺りもあとでsamに組み込み
+この辺りもあとでsamに組み込み -->
 
 ## 各ブラウザ関連のダウンロード
 ### chromedriver

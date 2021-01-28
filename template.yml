@@ -11,13 +11,13 @@ Resources:
       Runtime: go1.x
       Timeout: 10
       Tracing: Active
-      Layers:
-        - !Ref LambdaLayer
+      # Layers:
+      #   - !Ref LambdaLayer
       Events:
         api:
           Type: Api 
           Properties:
-            Path: /
+            Path: /sc
             Method: GET
 
   # Log Group
@@ -27,16 +27,17 @@ Resources:
       LogGroupName: !Sub /aws/lambda/${GoSelenium}
       RetentionInDays: 1
 
-  LambdaLayer:
-    Type: "AWS::Lambda::LayerVersion"
-    Properties:
-      CompatibleRuntimes: 
-        - go1.x
-      Content: 
-        S3Bucket: selenium-stack
-        S3Key: layer.zip
-      Description: something
-      LayerName: selenium
+  # LambdaLayer:
+  #   Type: AWS::Lambda::LayerVersion
+  #   Properties:
+  #     CompatibleRuntimes: 
+  #       - go1.x
+  #     Content: 
+  #       S3Bucket: selenium-stack
+  #       S3Key: layer.zip
+  #     # ContentUri: "./layer/zip/layer.zip"
+  #     Description: layer
+  #     LayerName: selenium
 
 Outputs:
   GoSeleniumAPI:

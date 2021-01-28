@@ -5,7 +5,7 @@ Resources:
   GoSelenium:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://go-selenium-stack/19f99c39fe636d2cde3b76f0dba2357e
+      CodeUri: s3://go-selenium-stack/2117603eae7d49d1a634668f0a0b1da2
       Handler: handler
       Runtime: go1.x
       Timeout: 10
@@ -16,7 +16,7 @@ Resources:
         api:
           Type: Api
           Properties:
-            Path: /
+            Path: /sc
             Method: GET
   GoSeleniumLogGroup:
     Type: AWS::Logs::LogGroup
@@ -32,7 +32,7 @@ Resources:
       Content:
         S3Bucket: selenium-stack
         S3Key: layer.zip
-      Description: something
+      Description: layer
       LayerName: selenium
 Outputs:
   GoSeleniumAPI:
